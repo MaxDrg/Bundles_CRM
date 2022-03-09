@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if exist_error %}
+  <script>
+    alert("Аккаунт AdMob с такими данными уже добавлен")
+  </script>
+{% endif %}
+
+<div class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Выберите аккаунт AdMob для синхронизации с вашими приложениями</h5>
+        </div>
+        <div class="card-body">
+          <form method="POST" id="form_admob">
+            {% csrf_token %}
+            <input type="text" name="from" style="display:none;" value='form_admob'/>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Введите название для нового аккаунта AdMob</label>
+                  <input name="admob_name" class="input form-control" type="text" placeholder="Название">
+                  <label>Введите Publisher ID вашего аккаунта AdMob</label>
+                  <input name="admob_pub_id" class="input form-control" type="text" placeholder="Publisher ID">
+                  <label>Вставьте содержимое JSON-файла из Admob</label>
+                  <input name="admob_file" class="input form-control" type="text" placeholder="Содержимое">
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer">
+          <button onclick="check_input_admob()" class="btn btn-fill btn-primary">Сохранить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

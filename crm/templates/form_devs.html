@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Edit Profile</h5>
+        </div>
+        <div class="card-body">
+          <form method="POST" id="form_dev">
+            {% csrf_token %}
+            <input type="text" name="from" style="display:none;" value='form_devs'/>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Название разработчика</label>
+                  <input name="dev" type="text" class="input form-control" placeholder="Название">
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer">
+          <button onclick="checkInputDev()" class="btn btn-fill btn-primary">Сохранить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

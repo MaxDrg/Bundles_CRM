@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Синхронизация AdMob с вашими приложениями</h5>
+        </div>
+        <div class="card-body">
+          <form method="POST" id="form_token">
+            {% csrf_token %}
+            <input type="text" name="from" style="display:none;" value='{{ from }}'/>
+            <input type="text" name="admob_id" style="display:none;" value='{{ admob_id }}'/>
+            <input type="text" name="app_id" style="display:none;" value='{{ app_id }}'/>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Перейдите по <a href="{{ google_url }}">ссылке</a> и введите сгенерированный токен</label>
+                  <input name="token" type="text" class="input form-control" placeholder="Токен Google">
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer">
+          <button onclick="check_input_token()" class="btn btn-fill btn-primary">Синхронизировать</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

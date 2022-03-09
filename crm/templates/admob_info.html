@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block header %}
+
+<form method="post" id="date_start_end" style="display: flex;">
+  {% csrf_token %}
+  <input name="from" style="display: none;" type="text" value="date_start_end">
+  <input name="app_id" style="display: none;" type="text" value="{{ app_id }}">
+  <input name="admob_id" style="display: none;" type="text" value="{{ admob_id }}">
+  <li class="search-bar input-group" style="background-color: #dd4ece99; width: 170px">
+    <input name="start_time" style="color: white;" type="date" value="{{ start_time }}">
+  </li>
+  <li class="search-bar input-group" style="background-color: #dd4ece99; width: 170px">
+    <input name="end_time" style="color: white;" type="date"value="{{ end_time }}">
+  </li>
+</form>
+<li class="search-bar input-group">
+  <button onclick="url_admob_info_from_to()" class="btn btn-link"><i class="tim-icons icon-calendar-60" ></i>
+    <span class="d-lg-none d-md-block">Данные за промежуток</span>
+  </button>
+</li>
+{% endblock %}
+
+{% block content %}
+
+<div class="content">
+  <div class="row">
+    <div class="col-12">
+      <div class="card card-chart">
+        <div class="card-header ">
+          <div class="row">
+            <div class="col-sm-6 text-left">
+              <h5 class="card-category">Приложение</h5>
+              <h2 class="card-title">{{ app_name }}</h2>
+            </div>
+            <div class="col-sm-6 text-left">
+              <h5 class="card-category">Оценка доходов</h5>
+              <h2 class="card-title">{{ summ }}</h2>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="chart-area">
+            <canvas id="chartBig1"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="{% static 'crm/img/apple-icon.png' %}">
+  <link rel="icon" type="image/png" href="{% static 'crm/img/favicon.png' %}">
+  <title>
+    Bundles CRM
+  </title>
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <!-- Nucleo Icons -->
+  <link href="{% static 'crm/css/nucleo-icons.css' %}" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link href="{% static 'crm/css/black-dashboard.css' %}" rel="stylesheet" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link href="{% static 'crm/demo/demo.css' %}" rel="stylesheet" />
+</head>
+
+<body class="">
+  <div class="wrapper">
+    <div class="sidebar">
+      <!--
+        Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red"
+    -->
+      <div class="sidebar-wrapper">
+        <ul class="nav">
+        {% if current_sidebar == 'apps' %}
+          <li class="active">
+            <a href="{% url 'folders' %}">
+              <i class="tim-icons icon-notes"></i>
+              <p>Приложения</p>
+            </a>
+          </li>
+        {% else %}
+          <li>
+            <a href="{% url 'folders' %}">
+              <i class="tim-icons icon-notes"></i>
+              <p>Приложения</p>
+            </a>
+          </li>
+        {% endif %}
+        {% if current_sidebar == 'devs' %}
+          <li class="active">
+            <a href="">
+              <i class="tim-icons icon-puzzle-10"></i>
+              <p>Разработчики</p>
+            </a>
+          </li>
+        {% else %}
+          <li>
+            <a href="{% url 'devs' %}">
+              <i class="tim-icons icon-puzzle-10"></i>
+              <p>Разработчики</p>
+            </a>
+          </li>
+        {% endif %}
+        {% if current_sidebar == 'apps_dashboard' %}
+          <li class="active">
+            <a href="{% url 'apps_dashboard' %}">
+              <i class="tim-icons icon-chart-pie-36"></i>
+              <p>Статистика приложений</p>
+            </a>
+          </li>
+        {% else %}
+          <li>
+            <a href="{% url 'apps_dashboard' %}">
+              <i class="tim-icons icon-chart-pie-36"></i>
+              <p>Статистика приложений</p>
+            </a>
+          </li>
+        {% endif %}
+        {% if current_sidebar == 'admobs' %}
+          <li class="active">
+            <a href="{% url 'admobs' %}">
+              <i class="tim-icons icon-cloud-download-93"></i>
+              <p>Аккаунты AdMob</p>
+            </a>
+          </li>
+        {% else %}
+          <li>
+            <a href="{% url 'admobs' %}">
+              <i class="tim-icons icon-cloud-download-93"></i>
+              <p>Аккаунты AdMob</p>
+            </a>
+          </li>
+        {% endif %}
+        </ul>
+      </div>
+    </div>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            <div class="navbar-toggle d-inline">
+              <button type="button" class="navbar-toggler">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+              </button>
+            </div>
+            <a class="navbar-brand" href="javascript:void(0)">BUNDLES CRM</a>
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navigation">
+            <ul class="navbar-nav ml-auto">
+              <li class="search-bar input-group">
+                <button class="btn btn-link" id="search-button" data-toggle="modal" data-target="#searchModal"><i class="tim-icons icon-zoom-split" ></i>
+                  <span class="d-lg-none d-md-block">Искать по бандлу</span>
+                </button>
+              </li>
+
+              {% block header %}
+            
+              {% endblock %}
+              
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="modal modal-search fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <form method="post" action="{% url 'app_info' %}">
+                {% csrf_token %}
+                <input name="app_bundle" type="text" class="form-control" id="inlineFormInputGroup" placeholder="SEARCH">
+                <input name="from" style="display: none;" type="text" value="search">
+                <input type="submit" style="display: none;">
+              </form>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <i class="tim-icons icon-simple-remove"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Navbar -->
+      
+      {% block content %}
+            
+      {% endblock %}
+
+      <footer class="footer">
+        <div class="container-fluid">
+          <div class="copyright">
+            ©
+            <script>
+              document.write(new Date().getFullYear())
+            </script>2022 made by
+            <a href="https://www.instagram.com/maksym_drv/" target="_blank">Maxim Dergachov</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <!--   Core JS Files   -->
+  <script src="{% static 'crm/js/core/jquery.min.js' %}"></script>
+  <script src="{% static 'crm/js/core/popper.min.js' %}"></script>
+  <script src="{% static 'crm/js/core/bootstrap.min.js' %}"></script>
+  <script src="{% static 'crm/js/plugins/perfect-scrollbar.jquery.min.js' %}"></script>
+  <!--  Google Maps Plugin    -->
+  <!-- Place this tag in your head or just before your close body tag. -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+  <!-- Chart JS -->
+  <script src="{% static 'crm/js/plugins/chartjs.min.js' %}"></script>
+  <!--  Notifications Plugin    -->
+  <script src="{% static 'crm/js/plugins/bootstrap-notify.js' %}"></script>
+  <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="{% static 'crm/js/black-dashboard.min.js' %}"></script><!-- Black Dashboard DEMO methods, don't include it in your project! -->
+  <script>
+    $(document).ready(function() {
+      $().ready(function() {
+        $sidebar = $('.sidebar');
+        $navbar = $('.navbar');
+        $main_panel = $('.main-panel');
+
+        $full_page = $('.full-page');
+
+        $sidebar_responsive = $('body > .navbar-collapse');
+        sidebar_mini_active = true;
+        white_color = false;
+
+        window_width = $(window).width();
+
+        fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
+
+
+
+        $('.fixed-plugin a').click(function(event) {
+          if ($(this).hasClass('switch-trigger')) {
+            if (event.stopPropagation) {
+              event.stopPropagation();
+            } else if (window.event) {
+              window.event.cancelBubble = true;
+            }
+          }
+        });
+
+        $('.fixed-plugin .background-color span').click(function() {
+          $(this).siblings().removeClass('active');
+          $(this).addClass('active');
+
+          var new_color = $(this).data('color');
+
+          if ($sidebar.length != 0) {
+            $sidebar.attr('data', new_color);
+          }
+
+          if ($main_panel.length != 0) {
+            $main_panel.attr('data', new_color);
+          }
+
+          if ($full_page.length != 0) {
+            $full_page.attr('filter-color', new_color);
+          }
+
+          if ($sidebar_responsive.length != 0) {
+            $sidebar_responsive.attr('data', new_color);
+          }
+        });
+
+        $('.switch-sidebar-mini input').on("switchChange.bootstrapSwitch", function() {
+          var $btn = $(this);
+
+          if (sidebar_mini_active == true) {
+            $('body').removeClass('sidebar-mini');
+            sidebar_mini_active = false;
+            blackDashboard.showSidebarMessage('Sidebar mini deactivated...');
+          } else {
+            $('body').addClass('sidebar-mini');
+            sidebar_mini_active = true;
+            blackDashboard.showSidebarMessage('Sidebar mini activated...');
+          }
+
+          // we simulate the window Resize so the charts will get updated in realtime.
+          var simulateWindowResize = setInterval(function() {
+            window.dispatchEvent(new Event('resize'));
+          }, 180);
+
+          // we stop the simulation of Window Resize after the animations are completed
+          setTimeout(function() {
+            clearInterval(simulateWindowResize);
+          }, 1000);
+        });
+
+        $('.switch-change-color input').on("switchChange.bootstrapSwitch", function() {
+          var $btn = $(this);
+
+          if (white_color == true) {
+
+            $('body').addClass('change-background');
+            setTimeout(function() {
+              $('body').removeClass('change-background');
+              $('body').removeClass('white-content');
+            }, 900);
+            white_color = false;
+          } else {
+
+            $('body').addClass('change-background');
+            setTimeout(function() {
+              $('body').removeClass('change-background');
+              $('body').addClass('white-content');
+            }, 900);
+
+            white_color = true;
+          }
+
+
+        });
+
+        $('.light-badge').click(function() {
+          $('body').addClass('white-content');
+        });
+
+        $('.dark-badge').click(function() {
+          $('body').removeClass('white-content');
+        });
+      });
+    });
+  </script>
+  <script>
+    $(document).ready(function() {
+      // Javascript method's body can be found in assets/js/demos.js
+      demo.initDashboardPageCharts();
+
+    });
+  </script>
+
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+
+  <script>
+    window.TrackJS &&
+      TrackJS.install({
+        token: "ee6fab19c5a04ac1a32a645abde4613a",
+        application: "black-dashboard-free"
+      });
+  </script>
+
+  <script>
+    function checkInputDev() {
+      for (const dev of document.getElementsByClassName("input")) {
+        if (dev.value === "") {
+          alert("Заполните все поля!");
+          return;
+        }
+      }
+      let form = document.getElementById("form_dev");
+      form.action = "{% url 'devs' %}";
+      document.body.append(form);
+      form.submit();
+    }
+
+    function check_input_admob() {
+      for (const dev of document.getElementsByClassName("input")) {
+        if (dev.value === "") {
+          alert("Заполните все поля!");
+          return;
+        }
+      }
+      let form = document.getElementById("form_admob");
+      form.action = "{% url 'check_admob' %}";
+      document.body.append(form);
+      form.submit();
+    }
+
+    function check_input_token() {
+      for (const dev of document.getElementsByClassName("input")) {
+        if (dev.value === "") {
+          alert("Заполните все поля!");
+          return;
+        }
+      }
+      let form = document.getElementById("form_token");
+      form.action = "{% url 'admob_info' %}";
+      document.body.append(form);
+      form.submit();
+    }
+
+    function delete_devs() {
+      let check = false;
+      for (const dev of document.getElementsByClassName("check")) {
+        if (dev.checked) {
+          check = true;
+        }
+      }
+      if (check) {
+        var proceed = confirm("Вы уверенны что хотите удалить выбранные файлы?");
+        if (proceed) {
+          let form = document.getElementById("devs");
+          form.action = "{% url 'devs' %}";
+          document.body.append(form);
+          form.submit();
+        }
+      } else {
+        alert("Выберите файлы, которые хотите удалить!");
+      }
+    }
+
+    function delete_admobs() {
+      let check = false;
+      for (const dev of document.getElementsByClassName("check")) {
+        if (dev.checked) {
+          check = true;
+        }
+      }
+      if (check) {
+        var proceed = confirm("Вы уверенны что хотите удалить выбранные файлы?");
+        if (proceed) {
+          let form = document.getElementById("admobs");
+          form.action = "{% url 'admobs' %}";
+          document.body.append(form);
+          form.submit();
+        }
+      } else {
+        alert("Выберите файлы, которые хотите удалить!");
+      }
+    }
+
+    function synchApps() {
+      document.location.href = "{% url 'folders' %}?synch=true";
+    }
+
+    function synch_admob() {
+      document.location.href = "{% url 'form_admob' %}?admob_id={{ admob_id }}";
+    }
+
+    function urlFormDev() {
+      document.location.href = "{% url 'form_devs' %}";
+    }
+
+    function url_form_admob() {
+      document.location.href = "{% url 'form_admob' %}";
+    }
+
+    function url_admob_info() {
+      let form = document.getElementById("app_info");
+        form.action = "{% url 'admob_info' %}";
+        document.body.append(form);
+        form.submit();
+    }
+
+    function url_app_info_day() {
+      let form = document.getElementById("date_day");
+        form.action = "{% url 'app_info' %}";
+        document.body.append(form);
+        form.submit();
+    }
+
+    function url_app_info_from_to() {
+      let form = document.getElementById("date_from_to");
+        form.action = "{% url 'app_info' %}";
+        document.body.append(form);
+        form.submit();
+    }
+
+    function url_admob_info_from_to() {
+      let form = document.getElementById("date_start_end");
+        form.action = "{% url 'admob_info' %}";
+        document.body.append(form);
+        form.submit();
+    }
+
+    function url_app_info_day_dash() {
+      let form = document.getElementById("date_day");
+        form.action = "{% url 'apps_dashboard' %}";
+        document.body.append(form);
+        form.submit();
+    }
+
+    function url_app_info_from_to_dash() {
+      let form = document.getElementById("date_from_to");
+        form.action = "{% url 'apps_dashboard' %}";
+        document.body.append(form);
+        form.submit();
+    }
+
+    addEventListener("load", function () {
+    (function (f) {
+      function g(c) {
+        return function (b, a) {
+          b = b.cells[c].textContent;
+          a = a.cells[c].textContent;
+          b = +b || b;
+          a = +a || a;
+          return b > a ? 1 : b < a ? -1 : 0;
+        };
+      }
+
+      function init(d) {
+        const [{ cells }, ...e] = [...d.rows];
+        const tbody = e[0].parentNode;
+        [...cells].forEach((c, b) => {
+          var a = 0;
+          c.addEventListener("click", () => {
+            e.sort(g(b));
+            a && e.reverse();
+            tbody.append(...e);
+            a ^= 1;
+          });
+        });
+      }
+      document.querySelectorAll(f).forEach(init);
+    })(".table");
+  });
+  </script>
+
+  <script>
+    type = ['primary', 'info', 'success', 'warning', 'danger'];
+
+    demo = {
+      initPickColor: function() {
+        $('.pick-class-label').click(function() {
+          var new_class = $(this).attr('new-class');
+          var old_class = $('#display-buttons').attr('data-class');
+          var display_div = $('#display-buttons');
+          if (display_div.length) {
+            var display_buttons = display_div.find('.btn');
+            display_buttons.removeClass(old_class);
+            display_buttons.addClass(new_class);
+            display_div.attr('data-class', new_class);
+          }
+        });
+      },
+    
+      initDocChart: function() {
+        chartColor = "#FFFFFF";
+      
+        // General configuration for the charts with Line gradientStroke
+        gradientChartOptionsConfiguration = {
+          maintainAspectRatio: false,
+          legend: {
+            display: false
+          },
+          tooltips: {
+            bodySpacing: 4,
+            mode: "nearest",
+            intersect: 0,
+            position: "nearest",
+            xPadding: 10,
+            yPadding: 10,
+            caretPadding: 10
+          },
+          responsive: true,
+          scales: {
+            yAxes: [{
+              display: 0,
+              gridLines: 0,
+              ticks: {
+                display: false
+              },
+              gridLines: {
+                zeroLineColor: "transparent",
+                drawTicks: false,
+                display: false,
+                drawBorder: false
+              }
+            }],
+            xAxes: [{
+              display: 0,
+              gridLines: 0,
+              ticks: {
+                display: false
+              },
+              gridLines: {
+                zeroLineColor: "transparent",
+                drawTicks: false,
+                display: false,
+                drawBorder: false
+              }
+            }]
+          },
+          layout: {
+            padding: {
+              left: 0,
+              right: 0,
+              top: 15,
+              bottom: 15
+            }
+          }
+        };
+      
+        ctx = document.getElementById('lineChartExample').getContext("2d");
+      
+        gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
+        gradientStroke.addColorStop(0, '#80b6f4');
+        gradientStroke.addColorStop(1, chartColor);
+      
+        gradientFill = ctx.createLinearGradient(0, 170, 0, 50);
+        gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
+        gradientFill.addColorStop(1, "rgba(249, 99, 59, 0.40)");
+      
+        myChart = new Chart(ctx, {
+          type: 'line',
+          responsive: true,
+          data: {
+            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            datasets: [{
+              label: "Active Users",
+              borderColor: "#f96332",
+              pointBorderColor: "#FFF",
+              pointBackgroundColor: "#f96332",
+              pointBorderWidth: 2,
+              pointHoverRadius: 4,
+              pointHoverBorderWidth: 1,
+              pointRadius: 4,
+              fill: true,
+              backgroundColor: gradientFill,
+              borderWidth: 2,
+              data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610, 700, 630]
+            }]
+          },
+          options: gradientChartOptionsConfiguration
+        });
+      },
+    
+      initDashboardPageCharts: function() {
+      
+        gradientChartOptionsConfigurationWithTooltipBlue = {
+          maintainAspectRatio: false,
+          legend: {
+            display: false
+          },
+        
+          tooltips: {
+            backgroundColor: '#f5f5f5',
+            titleFontColor: '#333',
+            bodyFontColor: '#666',
+            bodySpacing: 4,
+            xPadding: 12,
+            mode: "nearest",
+            intersect: 0,
+            position: "nearest"
+          },
+          responsive: true,
+          scales: {
+            yAxes: [{
+              barPercentage: 1.6,
+              gridLines: {
+                drawBorder: false,
+                color: 'rgba(29,140,248,0.0)',
+                zeroLineColor: "transparent",
+              },
+              ticks: {
+                suggestedMin: 60,
+                suggestedMax: 125,
+                padding: 20,
+                fontColor: "#2380f7"
+              }
+            }],
+          
+            xAxes: [{
+              barPercentage: 1.6,
+              gridLines: {
+                drawBorder: false,
+                color: 'rgba(29,140,248,0.1)',
+                zeroLineColor: "transparent",
+              },
+              ticks: {
+                padding: 20,
+                fontColor: "#2380f7"
+              }
+            }]
+          }
+        };
+      
+        gradientChartOptionsConfigurationWithTooltipPurple = {
+          maintainAspectRatio: false,
+          legend: {
+            display: false
+          },
+        
+          tooltips: {
+            backgroundColor: '#f5f5f5',
+            titleFontColor: '#333',
+            bodyFontColor: '#666',
+            bodySpacing: 4,
+            xPadding: 12,
+            mode: "nearest",
+            intersect: 0,
+            position: "nearest"
+          },
+          responsive: true,
+          scales: {
+            yAxes: [{
+              barPercentage: 1.6,
+              gridLines: {
+                drawBorder: false,
+                color: 'rgba(29,140,248,0.0)',
+                zeroLineColor: "transparent",
+              },
+              ticks: {
+                //suggestedMin: 0,
+                //suggestedMax: 2,
+                padding: 20,
+                fontColor: "#9a9a9a"
+              }
+            }],
+          
+            xAxes: [{
+              barPercentage: 1.6,
+              gridLines: {
+                drawBorder: false,
+                color: 'rgba(225,78,202,0.1)',
+                zeroLineColor: "transparent",
+              },
+              ticks: {
+                padding: 20,
+                fontColor: "#9a9a9a"
+              }
+            }]
+          }
+        };
+      
+        gradientChartOptionsConfigurationWithTooltipOrange = {
+          maintainAspectRatio: false,
+          legend: {
+            display: false
+          },
+        
+          tooltips: {
+            backgroundColor: '#f5f5f5',
+            titleFontColor: '#333',
+            bodyFontColor: '#666',
+            bodySpacing: 4,
+            xPadding: 12,
+            mode: "nearest",
+            intersect: 0,
+            position: "nearest"
+          },
+          responsive: true,
+          scales: {
+            yAxes: [{
+              barPercentage: 1.6,
+              gridLines: {
+                drawBorder: false,
+                color: 'rgba(29,140,248,0.0)',
+                zeroLineColor: "transparent",
+              },
+              ticks: {
+                suggestedMin: 50,
+                suggestedMax: 110,
+                padding: 20,
+                fontColor: "#ff8a76"
+              }
+            }],
+
+            xAxes: [{
+              barPercentage: 1.6,
+              gridLines: {
+                drawBorder: false,
+                color: 'rgba(220,53,69,0.1)',
+                zeroLineColor: "transparent",
+              },
+              ticks: {
+                padding: 20,
+                fontColor: "#ff8a76"
+              }
+            }]
+          }
+        };
+
+        gradientChartOptionsConfigurationWithTooltipGreen = {
+          maintainAspectRatio: false,
+          legend: {
+            display: false
+          },
+
+          tooltips: {
+            backgroundColor: '#f5f5f5',
+            titleFontColor: '#333',
+            bodyFontColor: '#666',
+            bodySpacing: 4,
+            xPadding: 12,
+            mode: "nearest",
+            intersect: 0,
+            position: "nearest"
+          },
+          responsive: true,
+          scales: {
+            yAxes: [{
+              barPercentage: 1.6,
+              gridLines: {
+                drawBorder: false,
+                color: 'rgba(29,140,248,0.0)',
+                zeroLineColor: "transparent",
+              },
+              ticks: {
+                suggestedMin: 50,
+                suggestedMax: 125,
+                padding: 20,
+                fontColor: "#9e9e9e"
+              }
+            }],
+
+            xAxes: [{
+              barPercentage: 1.6,
+              gridLines: {
+                drawBorder: false,
+                color: 'rgba(0,242,195,0.1)',
+                zeroLineColor: "transparent",
+              },
+              ticks: {
+                padding: 20,
+                fontColor: "#9e9e9e"
+              }
+            }]
+          }
+        };
+
+
+        gradientBarChartConfiguration = {
+          maintainAspectRatio: false,
+          legend: {
+            display: false
+          },
+
+          tooltips: {
+            backgroundColor: '#f5f5f5',
+            titleFontColor: '#333',
+            bodyFontColor: '#666',
+            bodySpacing: 4,
+            xPadding: 12,
+            mode: "nearest",
+            intersect: 0,
+            position: "nearest"
+          },
+          responsive: true,
+          scales: {
+            yAxes: [{
+
+              gridLines: {
+                drawBorder: false,
+                color: 'rgba(29,140,248,0.1)',
+                zeroLineColor: "transparent",
+              },
+              ticks: {
+                suggestedMin: 60,
+                suggestedMax: 120,
+                padding: 20,
+                fontColor: "#9e9e9e"
+              }
+            }],
+
+            xAxes: [{
+
+              gridLines: {
+                drawBorder: false,
+                color: 'rgba(29,140,248,0.1)',
+                zeroLineColor: "transparent",
+              },
+              ticks: {
+                padding: 20,
+                fontColor: "#9e9e9e",
+              }
+            }]
+          }
+        };
+
+        
+
+        var chart_labels = [];
+        var chart_data = [];
+        var chart_data1 = [];
+
+        "{% for label in labels %}"
+          chart_labels.push("{{ label }}")
+        "{% endfor %}"
+
+        "{% for data in chart_data %}"
+          chart_data.push("{{ data }}")
+        "{% endfor %}"
+
+        "{% for data in chart_data1 %}"
+          chart_data1.push("{{ data }}")
+        "{% endfor %}"
+
+        var ctx = document.getElementById("chartBig1").getContext('2d');
+
+        var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+
+        var chart_label;
+        
+        "{% if current_sidebar == 'apps_dashboard' %}"
+          chart_label = "Добавлено приложений"
+        "{% else %}"
+          chart_label = "Установки"
+        "{% endif %}"
+        
+        gradientStroke.addColorStop(1, 'rgba(72,72,176,0.1)');
+        gradientStroke.addColorStop(0.4, 'rgba(72,72,176,0.0)');
+        gradientStroke.addColorStop(0, 'rgba(119,52,169,0)'); //purple colors
+        var config = {
+          type: 'line',
+          data: {
+            labels: chart_labels,
+            datasets: [{
+              label: chart_label,
+              fill: true,
+              backgroundColor: gradientStroke,
+              borderColor: '#d346b1',
+              borderWidth: 2,
+              borderDash: [],
+              borderDashOffset: 0.0,
+              pointBackgroundColor: '#d346b1',
+              pointBorderColor: 'rgba(255,255,255,0)',
+              pointHoverBackgroundColor: '#d346b1',
+              pointBorderWidth: 20,
+              pointHoverRadius: 4,
+              pointHoverBorderWidth: 15,
+              pointRadius: 4,
+              data: chart_data,
+            }]
+          },
+          options: gradientChartOptionsConfigurationWithTooltipPurple
+        };
+        
+        var myChartData = new Chart(ctx, config);
+
+        $("#0").click(function() {
+          var data = myChartData.config.data;
+          data.datasets[0].data = chart_data;
+          data.labels = chart_labels;
+          myChartData.update();
+        });
+        $("#1").click(function() {
+          var chart_data = chart_data1;
+          var data = myChartData.config.data;
+          data.datasets[0].data = chart_data;
+          data.labels = chart_labels;
+          myChartData.update();
+        });
+
+        $("#2").click(function() {
+          var chart_data = [60, 80, 65, 130, 80, 105, 90, 130, 70, 115, 60, 130];
+          var data = myChartData.config.data;
+          data.datasets[0].data = chart_data;
+          data.labels = chart_labels;
+          myChartData.update();
+        });
+
+      },
+
+      initGoogleMaps: function() {
+        var myLatlng = new google.maps.LatLng(40.748817, -73.985428);
+        var mapOptions = {
+          zoom: 13,
+          center: myLatlng,
+          scrollwheel: false, //we disable de scroll over the map, it is a really annoing when you scroll through page
+          styles: [{
+              "elementType": "geometry",
+              "stylers": [{
+                "color": "#1d2c4d"
+              }]
+            },
+            {
+              "elementType": "labels.text.fill",
+              "stylers": [{
+                "color": "#8ec3b9"
+              }]
+            },
+            {
+              "elementType": "labels.text.stroke",
+              "stylers": [{
+                "color": "#1a3646"
+              }]
+            },
+            {
+              "featureType": "administrative.country",
+              "elementType": "geometry.stroke",
+              "stylers": [{
+                "color": "#4b6878"
+              }]
+            },
+            {
+              "featureType": "administrative.land_parcel",
+              "elementType": "labels.text.fill",
+              "stylers": [{
+                "color": "#64779e"
+              }]
+            },
+            {
+              "featureType": "administrative.province",
+              "elementType": "geometry.stroke",
+              "stylers": [{
+                "color": "#4b6878"
+              }]
+            },
+            {
+              "featureType": "landscape.man_made",
+              "elementType": "geometry.stroke",
+              "stylers": [{
+                "color": "#334e87"
+              }]
+            },
+            {
+              "featureType": "landscape.natural",
+              "elementType": "geometry",
+              "stylers": [{
+                "color": "#023e58"
+              }]
+            },
+            {
+              "featureType": "poi",
+              "elementType": "geometry",
+              "stylers": [{
+                "color": "#283d6a"
+              }]
+            },
+            {
+              "featureType": "poi",
+              "elementType": "labels.text.fill",
+              "stylers": [{
+                "color": "#6f9ba5"
+              }]
+            },
+            {
+              "featureType": "poi",
+              "elementType": "labels.text.stroke",
+              "stylers": [{
+                "color": "#1d2c4d"
+              }]
+            },
+            {
+              "featureType": "poi.park",
+              "elementType": "geometry.fill",
+              "stylers": [{
+                "color": "#023e58"
+              }]
+            },
+            {
+              "featureType": "poi.park",
+              "elementType": "labels.text.fill",
+              "stylers": [{
+                "color": "#3C7680"
+              }]
+            },
+            {
+              "featureType": "road",
+              "elementType": "geometry",
+              "stylers": [{
+                "color": "#304a7d"
+              }]
+            },
+            {
+              "featureType": "road",
+              "elementType": "labels.text.fill",
+              "stylers": [{
+                "color": "#98a5be"
+              }]
+            },
+            {
+              "featureType": "road",
+              "elementType": "labels.text.stroke",
+              "stylers": [{
+                "color": "#1d2c4d"
+              }]
+            },
+            {
+              "featureType": "road.highway",
+              "elementType": "geometry",
+              "stylers": [{
+                "color": "#2c6675"
+              }]
+            },
+            {
+              "featureType": "road.highway",
+              "elementType": "geometry.fill",
+              "stylers": [{
+                "color": "#9d2a80"
+              }]
+            },
+            {
+              "featureType": "road.highway",
+              "elementType": "geometry.stroke",
+              "stylers": [{
+                "color": "#9d2a80"
+              }]
+            },
+            {
+              "featureType": "road.highway",
+              "elementType": "labels.text.fill",
+              "stylers": [{
+                "color": "#b0d5ce"
+              }]
+            },
+            {
+              "featureType": "road.highway",
+              "elementType": "labels.text.stroke",
+              "stylers": [{
+                "color": "#023e58"
+              }]
+            },
+            {
+              "featureType": "transit",
+              "elementType": "labels.text.fill",
+              "stylers": [{
+                "color": "#98a5be"
+              }]
+            },
+            {
+              "featureType": "transit",
+              "elementType": "labels.text.stroke",
+              "stylers": [{
+                "color": "#1d2c4d"
+              }]
+            },
+            {
+              "featureType": "transit.line",
+              "elementType": "geometry.fill",
+              "stylers": [{
+                "color": "#283d6a"
+              }]
+            },
+            {
+              "featureType": "transit.station",
+              "elementType": "geometry",
+              "stylers": [{
+                "color": "#3a4762"
+              }]
+            },
+            {
+              "featureType": "water",
+              "elementType": "geometry",
+              "stylers": [{
+                "color": "#0e1626"
+              }]
+            },
+            {
+              "featureType": "water",
+              "elementType": "labels.text.fill",
+              "stylers": [{
+                "color": "#4e6d70"
+              }]
+            }
+          ]
+        };
+
+        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+        var marker = new google.maps.Marker({
+          position: myLatlng,
+          title: "Hello World!"
+        });
+
+        // To add the marker to the map, call setMap();
+        marker.setMap(map);
+      },
+
+      showNotification: function(from, align) {
+        color = Math.floor((Math.random() * 4) + 1);
+
+        $.notify({
+          icon: "tim-icons icon-bell-55",
+          message: "Welcome to <b>Black Dashboard</b> - a beautiful freebie for every web developer."
+
+        }, {
+          type: type[color],
+          timer: 8000,
+          placement: {
+            from: from,
+            align: align
+          }
+        });
+      }
+
+    };
+  </script>
+</body>
+
+</html>

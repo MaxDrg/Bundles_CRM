@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block header %}
+
+<li class="search-bar input-group">
+  <button onclick="synchApps()" class="btn btn-link"><i class="tim-icons icon-refresh-02" ></i>
+    <span class="d-lg-none d-md-block">Синхронизировать</span>
+  </button>
+</li>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card ">
+        <div class="card-header">
+          <h4 class="card-title">Папки</h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table tablesorter " id="">
+              <thead class=" text-primary">
+                <tr>
+                  <th>
+                    Название папки
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for folder in folders %}
+                <tr>
+                  <td>
+                    <a href="{% url 'apps'%}?folder={{ folder.folder_name }}">{{ folder.folder_name }}</a>
+                  </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="card  card-plain">
+        <div class="card-header">
+          <h4 class="card-title">Приложения без данных</h4>
+          <p class="category">Проверьте правильность записи бандла или добавьте разработчика приложения</p>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table tablesorter " id="">
+              <thead class=" text-primary">
+                <tr>
+                  <th>
+                    Название
+                  </th>
+                  <th class="text-center">
+                    Бандл
+                  </th>
+                  <th>
+                    Всего установок
+                  </th>
+                  <th>
+                    Обновлено
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for app in apps %}
+                <tr>
+                  <td>
+                    {{ app.app_name }}
+                  </td>
+                  <td class="text-center">
+                    {{ app.app_id }}
+                  </td>
+                  <td>
+                    {{ app.installs }}
+                  </td>
+                  <td>
+                    {{ app.last_update }}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

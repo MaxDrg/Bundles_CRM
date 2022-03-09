@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block header %}
+
+<li class="search-bar input-group">
+  <button onclick="urlFormDev()" class="btn btn-link"><i class="tim-icons icon-simple-add" ></i>
+    <span class="d-lg-none d-md-block">Добавить разработчика</span>
+  </button>
+</li>
+<li class="search-bar input-group">
+  <button onclick="delete_devs()" class="btn btn-link"><i class="tim-icons icon-trash-simple" ></i>
+    <span class="d-lg-none d-md-block">Удалить разработчика</span>
+  </button>
+</li>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card ">
+        <div class="card-header">
+          <h4 class="card-title">Разработчики</h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <form method="POST" id="devs">
+              {% csrf_token %}
+              <table class="table tablesorter " id="">
+                <thead class=" text-primary">
+                  <tr>
+                    <th class="text-center">
+                      Выбрать
+                    </th>
+                    <th>
+                      Разработчик
+                    </th>
+                  </tr>
+                </thead>
+                <input type="text" name="from" style="display:none;" value='devs'/>
+                <tbody>
+                  {% for dev in devs %}
+                  <tr>
+                    <td class="text-center">
+                      <div class="form-check">
+                        <label class="form-check-label">
+                          <input class="check form-check-input" name="list_dev" type="checkbox" value="{{ dev.id }}">
+                          <span class="form-check-sign">
+                            <span class="check"></span>
+                          </span>
+                        </label>
+                      </div>
+                    </td>
+                    <td>
+                      {{ dev.dev }}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

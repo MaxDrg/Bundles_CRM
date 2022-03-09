@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% if not search %}
+<script>alert("Приложение не найдено!")</script>
+{% endif %}
+
+<form method="post" id="date_day">
+  {% csrf_token %}
+  <input name="from" style="display: none;" type="text" value="date_day">
+  <input name="app_id" style="display: none;" type="text" value="{{ app_id }}">
+  <li class="search-bar input-group" style="background-color: #dd4ece99; width: 170px">
+    <input name="date_day" style="color: white;" type="date" value="{{ date_day }}">
+  </li>
+</form>
+<li class="search-bar input-group">
+  <button onclick="url_app_info_day()" class="btn btn-link"><i class="tim-icons icon-time-alarm" ></i>
+    <span class="d-lg-none d-md-block">Данные за день</span>
+  </button>
+</li>
+<form method="post" id="date_from_to" style="display: flex;">
+  {% csrf_token %}
+  <input name="from" style="display: none;" type="text" value="date_from_to">
+  <input name="app_id" style="display: none;" type="text" value="{{ app_id }}">
+  <li class="search-bar input-group" style="background-color: #dd4ece99; width: 170px">
+    <input name="date_from" style="color: white;" type="date" value="{{ date_from }}">
+  </li>
+  <li class="search-bar input-group" style="background-color: #dd4ece99; width: 170px">
+    <input name="date_to" style="color: white;" type="date"value="{{ date_to }}">
+  </li>
+</form>
+<li class="search-bar input-group">
+  <button onclick="url_app_info_from_to()" class="btn btn-link"><i class="tim-icons icon-calendar-60" ></i>
+    <span class="d-lg-none d-md-block">Данные за промежуток</span>
+  </button>
+</li>
+{% endblock %}
+
+{% block content %}
+
+<div class="content">
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-category">Всего установок</h5>
+          <h3 class="card-title"><i class="tim-icons icon-upload"></i> {{ installs }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-category">Статус в Play Market</h5>
+          {% if status %}
+            <h3 class="card-title"><i class="tim-icons icon-check-2"></i> Доступно</h3>
+          {% else %}
+            <h3 class="card-title"><i class="tim-icons icon-simple-remove"></i> Не доступно</h3>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-category">Последнее обновление</h5>
+          <h3 class="card-title"><i class="tim-icons icon-watch-time"></i> {{ last_update }}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="card card-chart">
+        <div class="card-header ">
+          <div class="row">
+            <div class="col-sm-6 text-left">
+              <h5 class="card-category">Приложение</h5>
+              <h2 class="card-title">{{ app_name }}</h2>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="chart-area">
+            <canvas id="chartBig1"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card card-chart">
+            <div class="card-footer">
+              <div class="text-center">
+                {% if admob == None %}
+                  <p>Для этого приложения не найден аккаунт Google AdMob<br>Добавьте аккаунт и синхронизируйте его с вашими приложениями</p>
+                {% else %}
+                  <form method="post" id="app_info" style="display: flex;">
+                    {% csrf_token %}
+                    <input name="from" style="display: none;" type="text" value="app_info">
+                    <input name="app_id" style="display: none;" type="text" value="{{ app_id }}">
+                    <input name="admob_id" style="display: none;" type="text" value="{{ admob }}">
+                  </form>
+                  <label>Перейти к данным приложения в Google AdMob</label>
+                  <button onclick="url_admob_info()" class="btn btn-fill btn-primary">Перейти</button>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

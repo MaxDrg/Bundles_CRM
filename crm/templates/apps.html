@@ -1,0 +1,85 @@
+{% extends 'base.html' %} 
+
+{% block header %}
+
+  {% if not admob_id == None %}
+    <li class="search-bar input-group">
+      <button onclick="synch_admob()" class="btn btn-link"><i class="tim-icons icon-refresh-02" ></i>
+        <span class="d-lg-none d-md-block">Синхронизировать</span>
+      </button>
+    </li>
+  {% endif %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Приложения в папке {{ folder_name }}</h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table tablesorter" id="">
+              <thead class="text-primary">
+                <tr>
+                  <th>Название</th>
+                  <th>Бандл</th>
+                  <th>Всего установок</th>
+                  <th>Обновлено</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for app in apps %}
+                <tr>
+                  <td>
+                    <a href="{% url 'app_info' %}?app={{ app.id }}">
+                      {% if app.status %}
+                      <p>{{ app.app_name }}</p>
+                      {% else %}
+                      <p style="color: grey"><s>{{ app.app_name }}</s></p>
+                      {% endif %}
+                    </a>
+                  </td>
+                  <td>
+                    <a href="{% url 'app_info' %}?app={{ app.id }}">
+                      {% if app.status %}
+                      <p>{{ app.app_id }}</p>
+                      {% else %}
+                      <p style="color: grey"><s>{{ app.app_id }}</s></p>
+                      {% endif %}
+                    </a>
+                  </td>
+                  <td>
+                    <a href="{% url 'app_info' %}?app={{ app.id }}">
+                      {% if app.status %}
+                      <p>{{ app.installs }}</p>
+                      {% else %}
+                      <p style="color: grey"><s>{{ app.installs }}</s></p>
+                      {% endif %}
+                    </a>
+                  </td>
+                  <td>
+                    <a href="{% url 'app_info' %}?app={{ app.id }}">
+                      {% if app.status %}
+                      <p>{{ app.last_update }}</p>
+                      {% else %}
+                      <p style="color: grey"><s>{{ app.last_update }}</s></p>
+                      {% endif %}
+                    </a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

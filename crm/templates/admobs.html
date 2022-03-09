@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block header %}
+
+<li class="search-bar input-group">
+  <button onclick="url_form_admob()" class="btn btn-link"><i class="tim-icons icon-simple-add" ></i>
+    <span class="d-lg-none d-md-block">Добавить AdMob</span>
+  </button>
+</li>
+<li class="search-bar input-group">
+  <button onclick="delete_admobs()" class="btn btn-link"><i class="tim-icons icon-trash-simple" ></i>
+    <span class="d-lg-none d-md-block">Удалить AdMob</span>
+  </button>
+</li>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card ">
+        <div class="card-header">
+          <h4 class="card-title">Ваши аккаунты AdMob</h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <form method="POST" id="admobs">
+              {% csrf_token %}
+              <table class="table tablesorter " id="">
+                <thead class=" text-primary">
+                  <tr>
+                    <th class="text-center">
+                      Выбрать
+                    </th>
+                    <th>
+                      Название AdMob
+                    </th>
+                  </tr>
+                </thead>
+                <input type="text" name="from" style="display:none;" value='admobs'/>
+                <tbody>
+                  {% for admob in admobs %}
+                  <tr>
+                    <td class="text-center">
+                      <div class="form-check">
+                        <label class="form-check-label">
+                          <input class="check form-check-input" name="list_admob" type="checkbox" value="{{ admob.id }}">
+                          <span class="form-check-sign">
+                            <span class="check"></span>
+                          </span>
+                        </label>
+                      </div>
+                    </td>
+                    <td>
+                      <!--<a href="{% url 'form_admob' %}?admob_id={{ admob.id }}">-->
+                      <a href="{% url 'apps' %}?admob_id={{ admob.id }}">
+                        {{ admob.admob_name }}
+                      </a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if message_success %}
+  <script>
+    alert("Admob успешно синхронизирован с вашими приложениями")
+  </script>
+{% endif %}
+
+{% endblock %}

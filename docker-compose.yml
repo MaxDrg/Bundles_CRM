@@ -1,0 +1,32 @@
+version: "3.0"
+ 
+services:
+  web:
+    image: bundles_crm:1.0.1
+    build: .
+    command: gunicorn bundles_crm.wsgi:application --bind 0.0.0.0:8000 --timeout 500
+    volumes:
+      - .:/bundles_crm
+      - static:/static/
+    expose:
+      - 8000
+    env_file:
+    - ./.env.dev
+  nginx:
+    build: ./nginx
+    volumes:
+      - static:/static/
+    ports:
+      - 82:82
+    depends_on:
+      - web
+  remover:
+    image: remover:1.0.1
+    build: ./apps_remover
+    command: python remover.py
+    volumes:
+      - /remover
+    env_file:
+      - ./.env.remove.dev
+volumes:
+  static:
