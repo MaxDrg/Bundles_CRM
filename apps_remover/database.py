@@ -14,11 +14,11 @@ class CRM:
         )
         print("A connection to the server has been established")
         self.conn = psycopg2.connect(
-        database = os.environ.get('CRM_DATABASE'),
-        user = os.environ.get('CRM_DATA_USER'),
-        password = os.environ.get('CRM_DATA_PASS'),
+        database = os.environ.get('DATABASE'),
+        user = os.environ.get('DATA_USER'),
+        password = os.environ.get('DATA_PASS'),
         host = os.environ.get('HOST'),
-        port = os.environ.get('CRM_DATA_PORT')
+        port = os.environ.get('DATA_PORT')
         )
         print ("Database connection established")
     
@@ -49,7 +49,7 @@ class Bot_apps:
             user = os.environ.get('CRM_DATA_USER'),
             password = os.environ.get('CRM_DATA_PASS'),
             host = os.environ.get('HOST'),
-            port = os.environ.get('CRM_DATA_PORT')
+            port = os.environ.get('DATA_PORT')
             )
             print ("Database connection established")
         except Exception as err:
