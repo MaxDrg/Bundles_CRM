@@ -27,6 +27,11 @@ class CRM:
             cursor.execute("""SELECT id, app_id FROM crm_apps""")
             return cursor.fetchall()
 
+    async def delete_app_history(self, app_id: int):
+        with self.conn.cursor() as cursor:
+            cursor.execute("""DELETE FROM crm_history WHERE app_id = %s;""", (app_id ,))
+            self.conn.commit()
+
     async def delete_crm_app(self, id: int):
         with self.conn.cursor() as cursor:
             cursor.execute("""DELETE FROM crm_apps WHERE id = %s;""", (id ,))
